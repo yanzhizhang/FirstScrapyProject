@@ -31,12 +31,6 @@ class CvprSpider(scrapy.Spider):
         authors = response.css("div.bibref").extract()
         hrefs = response.xpath('//a[contains(@href, "papers")]').extract()
 
-        # for a in response.xpath('//a[contains(@href, "papers")]'):
-        #     link = a.extract()
-        #     if link.endswith('.pdf'):
-        #         link = urlparse.urljoin(base_url, link)
-        #         yield Request(link, callback=self.save_pdf)
-
         for item in zip(authors, hrefs):
             new_item = PapersFile()
             new_item['author'] = item[0]

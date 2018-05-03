@@ -19,10 +19,8 @@ class CvprSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     def parse(self, response):
-        # print(response.css('div#all_results h3 a::attr(href)')[0].extract())
-        hrefs = response.xpath('//a/@href').extract()[0]
-        # hrefs = response.css('div#all_results h3 a::attr(href)').extract()
-        for href in hrefs:
+        hrefs = response.xpath('//a/@href').extract()
+        for href in hrefs[0:9]:
             if href.endswith('.pdf'):
                 yield Request(
                     url=response.urljoin(href),
