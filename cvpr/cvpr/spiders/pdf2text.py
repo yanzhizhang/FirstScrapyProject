@@ -28,5 +28,5 @@ def convert(fname, pages=None):
         f.write(text)
 
 print("start")
-convert("Teney_Graph-Structured_Representations_for_CVPR_2017_paper.pdf")
+convert("Teney_Graph-Structured_Representations_for_CVPR_2017_paper.pdf",[0,1])
 print("done")
