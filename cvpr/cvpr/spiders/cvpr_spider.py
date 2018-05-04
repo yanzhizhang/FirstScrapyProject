@@ -1,7 +1,7 @@
 import scrapy
 import re
 import numpy as np
-
+import csv
 
 class PapersFile(scrapy.Item):
     author = scrapy.Field()
@@ -37,9 +37,24 @@ class CvprSpider(scrapy.Spider):
         for href in hrefs:
             hrefs_list.append(re.search(r'<a href="(.*)">pdf', href).group(1))
 
-        cat_list = []
+        cat_dict = {}
         for i in range(len(authors_list)):
-            cat_list.append([authors_list[i],hrefs_list[i]])
+            cat_dict["authors"] = authors_list[i]
+            cat_dict["hrefs"] = hrefs_list[i]
+
+        with open('output.csv', 'w', newline='') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=['authors', 'hrefs'])
+            writer.writeheader()
+            # writer.writerow(cat_dict)
+            # for i in cat_dict:
+            #     print(i)
+            #     writer.writerow(i)
+
+            for i in range(len(authors_list)):
+                writer.writerow({"authors": authors_list[i],"hrefs": hrefs_list[i]})
+                # cat_dict["authors"] = authors_list[i]
+                # cat_dict["hrefs"] = hrefs_list[i]
+
 
         # for item in zip(authors_list, hrefs_list):
         #     new_item = PapersFile()
